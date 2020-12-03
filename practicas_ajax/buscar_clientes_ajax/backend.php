@@ -1,7 +1,7 @@
 <?php
-$con = @mysqli_connect("localhost", "root", "", "pruebaajax");
+$con = @mysqli_connect("localhost", "root", "1234", "pruebaajax");
 if (!$con) {
-    echo "<p> Error al conectar la base de datos" . mysql_connect_error() . "</p>";
+    echo "<p> Error al conectar la base de datos" . mysqli_connect_error() . "</p>";
     exit;
 }
 
@@ -15,4 +15,3 @@ while ($fila = mysqli_fetch_assoc($resultado)) {
 }
 mysqli_free_result($resultado);
 mysqli_close($con);
-?>

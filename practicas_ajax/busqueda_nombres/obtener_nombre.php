@@ -4,7 +4,7 @@
     $arreglo = array("Martha","Juana","Valeria","Jessybel");
     for($i=0; $i < count($arreglo); $i++){
         if($nombre == $arreglo[$i]){
-            $resultado = "<p>El nombre: $nombre ha sido encontrado u.u</p>";
+            $resultado = "<p>El nombre: $nombre ha sido encontrado</p>";
         }
     }
     if($resultado == ""){
@@ -12,4 +12,3 @@
     }else{
         echo "Hola, te saludamos: " . $resultado;
     }
-?>
