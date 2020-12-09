@@ -1,7 +1,6 @@
 $(function () {
-    let variable = false;
-    obetenerTareas();            
-
+    let modificar = false;
+    obetenerTareas();
     $("#task-form").submit(function (e) {
         const datos = {
             name: $("#name").val(),
@@ -9,7 +8,7 @@ $(function () {
             id: $("#taskId").val()
         };
 
-        let url = variable === false ? "insertar.php" : "modificar.php";        
+        let url = modificar === false ? "insertar.php" : "modificar.php";
         $.post(url, datos, function (response) {
             console.log(response);
             obetenerTareas();
@@ -45,10 +44,18 @@ $(function () {
         });
     }
 
-
     $(document).on("click", ".task-item", function () {
         let element = $(this)[0].parentElement.parentElement;
         let id = $(element).attr("taskId");
-        console.log(id);
-    }); 
+        $.post("getTareas.php", { id },
+            function (response) {
+                console.log(response);
+                const task = JSON.parse(response);
+                $("#name").val(task.nombre);
+                $("#description").val(task.descripcion);
+                $("#taskId").val(task.id);
+                modificar = true;
+            },
+        );
+    });
 });
