@@ -47,6 +47,7 @@ $(function () {
     $(document).on("click", ".task-item", function () {
         let element = $(this)[0].parentElement.parentElement;
         let id = $(element).attr("taskId");
+        console.log(id);
         $.post("getTareas.php", { id },
             function (response) {
                 console.log(response);
@@ -57,5 +58,38 @@ $(function () {
                 modificar = true;
             },
         );
+    });
+
+    $(document).on("click", ".task-delete", function () {
+        if (confirm("Estas seguro de eliminarlo?")) {
+            let element = $(this)[0].parentElement.parentElement;
+            let id = $(element).attr("taskId");
+            $.post("eliminar.php", { id }, function (response) {
+                obetenerTareas();
+            });
+        }
+    });
+
+    /* $('#search-btn').submit(function () { */
+    $('#search').keyup(function () {
+        if ($("#search").val()) {
+            let search = $('#search').val();
+            $.ajax({
+                type: "POST",
+                url: "buscar.php",
+                data: { search },
+                success: function (response) {
+                    let tasks = JSON.parse(response);
+                    let template = "";
+                    tasks.forEach(tareas => {
+                        console.log(tareas);
+                        template +=
+                            `<li>${tareas.nombre}</li>`
+                    });
+                    $("#container").html(template);
+                    /* $("#task-result").show(); */
+                }
+            });
+        }
     });
 });
