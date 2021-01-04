@@ -1,0 +1,5 @@
+<form method="POST"> {% csrf_token %}
+
+    {{formulario_cliente.as_p}}
+    <button type="submit">Registrar</button>
+</form>
