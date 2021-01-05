@@ -22,11 +22,11 @@ class Cliente(models.Model):
     correo= models.CharField(max_length = 105)
     telefono = models.CharField(max_length = 15)
     celular = models.CharField(max_length = 15)
-    direccion = models.CharField(max_length = 200)
+    direccion = models.TextField(max_length = 200)
     date_created =models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return self.celular
+        return self.cedula
 
 class Cuenta(models.Model):
     listaTipoCuenta =(
@@ -43,7 +43,7 @@ class Cuenta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete= models.CASCADE)
     date_created =models.DateTimeField(auto_now_add = True)
     def __str__(self):
-        cadena = str(self.saldo)+";"+ str(self.cuenta_id)
+        cadena = str(self.saldo)+"; "+ str(self.cuenta_id)
         return cadena
 
 class Transaccion(models.Model):

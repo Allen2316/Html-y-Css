@@ -16,11 +16,11 @@
     <tbody>
         {% for cliente in listaClientes %}
         <tr>
-            <th scope="row">{{cliente.cedula}}</th>
+            <th scope="row"><a href="{% url 'modificar_clientes' cliente.cedula%}">{{cliente.cedula}}</a></th>
             <td>{{cliente.apellidos}}</td>
             <td>{{cliente.nombres}}</td>
             <td>{{cliente.correo}}</td>
-            <td>++|--</td>
+            <td><a href="{% url 'cuentas' cliente.cedula%}">Cuentas</a></td>
         </tr>
         {% endfor %}
     </tbody>

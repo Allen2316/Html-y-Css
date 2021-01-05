@@ -6,7 +6,7 @@ class FormularioCliente(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ["cedula", "apellidos", "nombres",
-                  "genero", "estadoCivil", "correo", "telefono"]
+                  "genero", "estadoCivil", "correo", "telefono","celular","direccion"]
 
 class FormularioCuenta(forms.ModelForm):
 
