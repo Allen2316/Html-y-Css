@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from apps.modelo.models import Cliente, Cuenta
-from .forms import FormularioCliente, FormularioCuenta
+from .forms import FormularioCliente, FormularioCuenta, ClienteUpdate, CuentaUpdate
 
 
 def index(request):
@@ -35,32 +35,70 @@ def crearCliente(request):
             cuenta.cliente = cliente
             # ORM
             cuenta.save()
-            return redirect(index)
+        return redirect(index)
     return render(request, 'clientes/crearClientes.html', locals())
 
 
 def modificarCliente(request, cedula):
-    cliente = Cliente.objects.get(cedula=cedula)    
+    cliente = Cliente.objects.get(cedula=cedula)
+    if request.method == 'GET':
+        formulario_cliente_editar = ClienteUpdate(instance=cliente)
+    else:
+        formulario_cliente_editar = ClienteUpdate(
+            request.POST, instance=cliente)
+        if formulario_cliente_editar.is_valid():
+            formulario_cliente_editar.save()
+        return redirect(index)
     return render(request, 'clientes/modificar.html', locals())
 
 
-def eliminarCliente(request):
-    return render(request, 'hola principal')
+def eliminarCliente(request, cedula):
+    cliente = Cliente.objects.get(cedula=cedula)
+    if request.method == 'POST':
+        cliente.delete()
+        return redirect(index)
+    return render(request, 'clientes/eliminar.html', locals())
 
 
 def listarCuentas(request, cedula):
-    cliente = Cliente.objects.get(cedula=cedula)    
+    cliente = Cliente.objects.get(cedula=cedula)
     cuentas = Cuenta.objects.filter(cliente=cliente)
     return render(request, 'cuentas/index.html', locals())
 
 
-def crearCuenta(request):
-    return render(request, 'cuentas/crear.html')
+def crearCuenta(request, cedula):
+    formulario_cuenta = FormularioCuenta(request.POST)
+    cliente = Cliente.objects.get(cedula=cedula)
+    if request.method == 'POST':
+        if formulario_cuenta.is_valid():
+            cuenta = Cuenta()
+            datos_cuenta = formulario_cuenta.cleaned_data
+            cuenta.numero = datos_cuenta.get("numero")
+            cuenta.saldo = datos_cuenta.get("saldo")
+            cuenta.tipoCuenta = datos_cuenta.get("tipoCuenta")
+            cuenta.cliente = cliente
+            # ORM
+            cuenta.save()
+        return redirect(index)
+    return render(request, 'cuentas/crear.html', locals())
 
 
-def modificarCuenta(request):
-    return render(request, 'hola principal')
+def modificarCuenta(request, numero):
+    cuenta = Cuenta.objects.get(numero=numero)
+    if request.method == 'GET':
+        formulario_cuenta_editar = CuentaUpdate(instance=cuenta)
+    else:
+        formulario_cuenta_editar = CuentaUpdate(
+            request.POST, instance=cuenta)
+        if formulario_cuenta_editar.is_valid():
+            formulario_cuenta_editar.save()
+        return redirect(index)
+    return render(request, 'cuentas/modificar.html', locals())
 
 
-def eliminarCuenta(request):
-    return render(request, 'hola principal')
+def eliminarCuenta(request, numero):
+    cuenta = Cuenta.objects.get(numero=numero)
+    if request.method == 'POST':
+        cuenta.delete()
+        return redirect(index)
+    return render(request, 'cuentas/eliminar.html', locals())

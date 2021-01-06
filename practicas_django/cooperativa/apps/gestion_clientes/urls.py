@@ -2,9 +2,19 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # personas
     path('', views.index, name="clientes"),
     path('crearClientes', views.crearCliente, name="crearClientes"),
-    path('modificar_clientes/<int:cedula>/', views.modificarCliente, name="modificar_clientes"),
+    path('modificar_clientes/<int:cedula>/',
+         views.modificarCliente, name="modificar_clientes"),
+    path('eliminar_clientes/<int:cedula>/',
+         views.eliminarCliente, name="eliminar_clientes"),
+
+    # cuenta
     path('cuentas/<int:cedula>/', views.listarCuentas, name="cuentas"),
-    path('crear_cuentas', views.crearCuenta, name="crear_cuentas"),
+    path('crearCuentas/<int:cedula>/', views.crearCuenta, name="crearCuentas"),
+    path('modificar_cuentas/<int:numero>/',
+         views.modificarCuenta, name="modificar_cuentas"),
+    path('eliminar_cuentas/<int:numero>/',
+         views.eliminarCuenta, name="eliminar_cuentas"),
 ]
