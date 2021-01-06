@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from apps.modelo.models import Cliente, Cuenta
 from .forms import FormularioCliente, FormularioCuenta, ClienteUpdate, CuentaUpdate
 
-
+@login_required
 def index(request):
     listaClientes = Cliente.objects.all()
     return render(request, 'clientes/index.html', locals())
 
-
+@login_required
 def crearCliente(request):
     formulario_cliente = FormularioCliente(request.POST)
     formulario_cuenta = FormularioCuenta(request.POST)
