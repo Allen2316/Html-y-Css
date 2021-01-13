@@ -3,11 +3,26 @@ from django.contrib.auth.decorators import login_required
 from apps.modelo.models import Cliente, Cuenta
 from .forms import FormularioCliente, FormularioCuenta, ClienteUpdate, CuentaUpdate
 
+
 @login_required
 def index(request):
-    listaClientes = Cliente.objects.all()
-    return render(request, 'clientes/index.html', locals())
+    usuario = request.user
+    if usuario.groups.filter(name="gestion_clientes").exists():
+        listaClientes = Cliente.objects.all()
+        return render(request, 'clientes/index.html', locals())
+    else:
+        return render(request, "login/forbidden.html", locals())
 
+
+''' @login_required
+def index(request):
+    #usuario = request.user        
+    if request.user.is_authenticated():
+        
+        return render(request, 'clientes/index.html')
+    else:
+        return render(request, "login/forbidden.html")
+ '''
 
 @login_required
 def crearCliente(request):
@@ -40,6 +55,7 @@ def crearCliente(request):
         return redirect(index)
     return render(request, 'clientes/crearClientes.html', locals())
 
+
 @login_required
 def modificarCliente(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
@@ -53,6 +69,7 @@ def modificarCliente(request, cedula):
         return redirect(index)
     return render(request, 'clientes/modificar.html', locals())
 
+
 @login_required
 def eliminarCliente(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
@@ -61,11 +78,13 @@ def eliminarCliente(request, cedula):
         return redirect(index)
     return render(request, 'clientes/eliminar.html', locals())
 
+
 @login_required
 def listarCuentas(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
     cuentas = Cuenta.objects.filter(cliente=cliente)
     return render(request, 'cuentas/index.html', locals())
+
 
 @login_required
 def crearCuenta(request, cedula):
@@ -84,6 +103,7 @@ def crearCuenta(request, cedula):
         return redirect(index)
     return render(request, 'cuentas/crear.html', locals())
 
+
 @login_required
 def modificarCuenta(request, numero):
     cuenta = Cuenta.objects.get(numero=numero)
@@ -96,6 +116,7 @@ def modificarCuenta(request, numero):
             formulario_cuenta_editar.save()
         return redirect(index)
     return render(request, 'cuentas/modificar.html', locals())
+
 
 @login_required
 def eliminarCuenta(request, numero):

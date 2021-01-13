@@ -1,1 +1,13 @@
-Hola a todos soy HOMEPAGE o index
+{% extends "master.html" %}
+
+{% block contenido %}
+
+<div class="text-center font-weight-bold">
+    <div class="mt-3 mb-3">
+        <p>La cooperativa de ahora y crédito permite el ahorro familiar.....</p>
+        <a href="{% url 'clientes' %}" class="btn btn-success">Continuar</a>
+    </div>
+</div>
+
+
+{% endblock %}
