@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('clientes/', include('apps.gestion_clientes.urls')),
     path('login/', include('apps.login.urls')),
+    path('transacciones/', include('apps.transacciones.urls')),
     path('', views.index, name='homepage'),
 ]

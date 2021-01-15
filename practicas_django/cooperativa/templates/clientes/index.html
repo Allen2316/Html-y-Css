@@ -6,6 +6,11 @@
 
 <a href="{% url 'crearClientes' %}" class="btn btn-primary m-2">Nuevo Cliente</a>
 
+<form method="POST">{% csrf_token %}
+    <input type="text" name="busqueda" placeholder="Ingrese su busqueda">
+    <button type="submit">Buscar</button>
+</form>
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -38,5 +43,3 @@
 </table>
 
 {% endblock %}
-
-

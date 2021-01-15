@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group, User
 from apps.modelo.models import Cliente, Cuenta
 from .forms import FormularioCliente, FormularioCuenta, ClienteUpdate, CuentaUpdate
+from django.db.models import Q
 
 
 @login_required
@@ -9,6 +11,14 @@ def index(request):
     usuario = request.user
     if usuario.groups.filter(name="gestion_clientes").exists():
         listaClientes = Cliente.objects.all()
+        busqueda = request.POST.get("busqueda")
+        if busqueda:
+            listaClientes = Cliente.objects.filter(
+                Q(nombres__icontains=busqueda) |
+                Q(apellidos__icontains=busqueda) |
+                Q(cedula=busqueda)
+            ).distinct()
+
         return render(request, 'clientes/index.html', locals())
     else:
         return render(request, "login/forbidden.html", locals())
@@ -16,13 +26,14 @@ def index(request):
 
 ''' @login_required
 def index(request):
-    #usuario = request.user        
+    # usuario = request.user        
     if request.user.is_authenticated():
         
         return render(request, 'clientes/index.html')
     else:
         return render(request, "login/forbidden.html")
  '''
+
 
 @login_required
 def crearCliente(request):
@@ -52,11 +63,20 @@ def crearCliente(request):
             cuenta.cliente = cliente
             # ORM
             cuenta.save()
+
+            user = User.objects.create_user(
+                cliente.cedula, cliente.correo, cliente.cedula)
+            user.first_name = cliente.nombres
+            user.last_name = cliente.apellidos
+            grupo = Group.objects.get(name="clientes")  # ORM
+            user.groups.add(grupo)
+            user.save()  # ORM
+
         return redirect(index)
     return render(request, 'clientes/crearClientes.html', locals())
 
 
-@login_required
+
 def modificarCliente(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
     if request.method == 'GET':
@@ -70,7 +90,7 @@ def modificarCliente(request, cedula):
     return render(request, 'clientes/modificar.html', locals())
 
 
-@login_required
+
 def eliminarCliente(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
     if request.method == 'POST':
@@ -79,14 +99,14 @@ def eliminarCliente(request, cedula):
     return render(request, 'clientes/eliminar.html', locals())
 
 
-@login_required
+
 def listarCuentas(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
     cuentas = Cuenta.objects.filter(cliente=cliente)
     return render(request, 'cuentas/index.html', locals())
 
 
-@login_required
+
 def crearCuenta(request, cedula):
     formulario_cuenta = FormularioCuenta(request.POST)
     cliente = Cliente.objects.get(cedula=cedula)
@@ -104,7 +124,7 @@ def crearCuenta(request, cedula):
     return render(request, 'cuentas/crear.html', locals())
 
 
-@login_required
+
 def modificarCuenta(request, numero):
     cuenta = Cuenta.objects.get(numero=numero)
     if request.method == 'GET':
@@ -118,7 +138,7 @@ def modificarCuenta(request, numero):
     return render(request, 'cuentas/modificar.html', locals())
 
 
-@login_required
+
 def eliminarCuenta(request, numero):
     cuenta = Cuenta.objects.get(numero=numero)
     if request.method == 'POST':
