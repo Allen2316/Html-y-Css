@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+{% block contenido %}
+<body >
+    
+</body>
+<div class="container mb-3" >
+    <div class="row justify-content-center">
+        <div class="col-sm-10 text-center">
+            <div class="card">
+                <div class="card-body bg-light">
+                    <form method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            {{formulario.as_p}}
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Despositar">
+                        <a href="{% url 'cuenta_cliente' cuenta.numero %}" type="button" class="btn btn-secondary">Cancelar</a>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -24,16 +24,6 @@ def index(request):
         return render(request, "login/forbidden.html", locals())
 
 
-''' @login_required
-def index(request):
-    # usuario = request.user        
-    if request.user.is_authenticated():
-        
-        return render(request, 'clientes/index.html')
-    else:
-        return render(request, "login/forbidden.html")
- '''
-
 
 @login_required
 def crearCliente(request):
@@ -76,7 +66,7 @@ def crearCliente(request):
     return render(request, 'clientes/crearClientes.html', locals())
 
 
-
+@login_required
 def modificarCliente(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
     if request.method == 'GET':
@@ -90,7 +80,7 @@ def modificarCliente(request, cedula):
     return render(request, 'clientes/modificar.html', locals())
 
 
-
+@login_required
 def eliminarCliente(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
     if request.method == 'POST':
@@ -99,14 +89,14 @@ def eliminarCliente(request, cedula):
     return render(request, 'clientes/eliminar.html', locals())
 
 
-
+@login_required
 def listarCuentas(request, cedula):
     cliente = Cliente.objects.get(cedula=cedula)
     cuentas = Cuenta.objects.filter(cliente=cliente)
     return render(request, 'cuentas/index.html', locals())
 
 
-
+@login_required
 def crearCuenta(request, cedula):
     formulario_cuenta = FormularioCuenta(request.POST)
     cliente = Cliente.objects.get(cedula=cedula)
@@ -124,7 +114,7 @@ def crearCuenta(request, cedula):
     return render(request, 'cuentas/crear.html', locals())
 
 
-
+@login_required
 def modificarCuenta(request, numero):
     cuenta = Cuenta.objects.get(numero=numero)
     if request.method == 'GET':
@@ -138,7 +128,7 @@ def modificarCuenta(request, numero):
     return render(request, 'cuentas/modificar.html', locals())
 
 
-
+@login_required
 def eliminarCuenta(request, numero):
     cuenta = Cuenta.objects.get(numero=numero)
     if request.method == 'POST':

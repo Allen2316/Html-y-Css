@@ -25,4 +25,4 @@ class FormularioCuenta(forms.ModelForm):
 class CuentaUpdate(forms.ModelForm):
     class Meta:
         model = Cuenta
-        fields = ["tipoCuenta", "saldo"]
+        fields = ["tipoCuenta", "saldo", "estado"]

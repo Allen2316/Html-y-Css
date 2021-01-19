@@ -12,26 +12,26 @@
     <a href="{% url 'clientes' %}" class="btn btn-secondary mt-2">Volver</a>
 </div>
 
-
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Numero</th>
-            <th scope="col">Saldo</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Tipo</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for cuenta in cuentas %}
-        <tr>
-            <th scope="row"><a href="{% url 'modificar_cuentas' cuenta.numero%}">{{cuenta.numero}}</a></th>
-            <td>{{cuenta.saldo}} USD</td>
-            <td>{{cuenta.estado}}</td>
-            <td>{{cuenta.tipoCuenta}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Numero</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cuenta in cuentas %}
+            <tr>
+                <th scope="row"><a href="{% url 'modificar_cuentas' cuenta.numero%}">{{cuenta.numero}}</a></th>
+                <td>{{cuenta.saldo}} USD</td>
+                <td>{{cuenta.estado}}</td>
+                <td>{{cuenta.tipoCuenta}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

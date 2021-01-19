@@ -1,24 +1,70 @@
+from django.shortcuts import render
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from apps.modelo.models import Cliente, Cuenta
 from django.contrib.auth.models import Group, User
-from apps.modelo.models import Cliente, Cuenta, Transaccion
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
+from apps.modelo.models import Cliente, Cuenta, Transaccion
+from .forms import FormularioTransaccion
 
 @login_required
 def index(request):
+    usuario = request.user
+    if usuario.groups.filter(name = "transacciones").exists(): 
+        listaCuentas = Cuenta.objects.all()   
+        """busqueda = request.POST.get("busqueda") #busqueda por filtros
+        if busqueda:
+            listaCuentas = Cliente.objects.filter(
+                Q(nombres__icontains = busqueda) | 
+                Q(apellidos__icontains = busqueda) | 
+                Q(cedula = busqueda)
+            ).distinct()
+        #manejo del ORM 
+        """
+        return render (request, 'cuentas/index_transacciones.html', locals())
+    else:
+        return render(request, 'login/forbidden.html', locals())
+
+@login_required
+def getCuentaPorCliente(request, numero):
 
     usuario = request.user
-    if usuario.groups.filter(name="transacciones").exists():
-        listaClientes = Cuenta.objects.all()
-        #busqueda = request.POST.get("busqueda")
-        """ if busqueda:
-            listaClientes = Cliente.objects.filter(
-                Q(nombres__icontains=busqueda) |
-                Q(apellidos__icontains=busqueda) |
-                Q(cedula=busqueda)
-            ).distinct() """
+    if usuario.groups.filter(name = "transacciones").exists():
+        
+        cuenta = Cuenta.objects.get(numero = numero)
+        if cuenta:
+            cliente = Cliente.objects.get(cedula = cuenta.cliente)
 
-        return render(request, 'cuentas/index_transacciones.html', locals())
+        
+        return render (request, 'transacciones/cuenta_cliente.html', locals())
     else:
-        return render(request, "login/forbidden.html", locals())
+        return render(request, 'login/forbidden.html', locals())
+
+    listaClientes = Cliente.objects.all()
+    return render (request, '/', locals())
+
+def depositar(request, numero):
+    usuario = request.user
+    if usuario.groups.filter(name = "transacciones").exists():
+        formulario = FormularioTransaccion()
+        cuenta = Cuenta.objects.get(numero = numero)
+        if request.method == 'POST':
+            transaccion = Transaccion()
+            transaccion.tipo = 'deposito'
+            transaccion.valor = float(request.POST.get('valor'))
+            transaccion.descripcion = request.POST.get('descripcion')
+            transaccion.cuenta = cuenta
+            transaccion.save()
+            valorTotal = float(request.POST.get('valor')) + float(cuenta.saldo)
+            cuenta.saldo = valorTotal
+            cuenta.save()
+            return redirect(index)
+
+
+
+        return render (request, 'transacciones/depositar.html', locals())
+    else:
+        return render(request, 'login/forbidden.html', locals())
+
+    listaClientes = Cliente.objects.all()
+    return render (request, '/', locals())
