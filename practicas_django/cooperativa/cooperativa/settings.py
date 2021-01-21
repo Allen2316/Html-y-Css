@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path 
+from pathlib import Path
 from django.urls import reverse_lazy
 import os
 
@@ -79,10 +79,24 @@ WSGI_APPLICATION = 'cooperativa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+#? Base de datos sqlite3 por defecto
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#   }
+#} 
+# ?--------
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cooperativa',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -105,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL = reverse_lazy('autenticar') # url name = autenticar de login->urls
+LOGIN_URL = reverse_lazy('autenticar')  # url name = autenticar de login->urls
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
