@@ -35,15 +35,38 @@
                 <td>{{cuenta.estado}} </td>
                 <td class="accion"><a href="{% url 'depositar' cuenta.numero %}" class="btn btn-success">Deposito</a>
                 </td>
-                <td class="accion"><a href="#" class="btn btn-info">Retiro</a> </td>
+                <td class="accion"><a href="{% url 'retirar' cuenta.numero %}" class="btn btn-info">Retiro</a> </td>
             </tr>
+        </tbody>
+    </table>
+    <h2 class="text-center">Transacciones de la Cuenta</h2>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col"># Cuenta</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaccion in transacciones %}
+            <tr>
+                <th scope="row">{{transaccion.fecha}}</th>
+                <td>{{transaccion.tipo}}</td>
+                <td>{{transaccion.valor}}</td>
+                <td>{{transaccion.descripcion}}</td>
+                <td>{{cuenta.numero}}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
 <div class="container-fluid my-2">
     <div class="row justify-content-center text-center">
         <div class="col-sm-6 accion">
-            <a href="{% url 'transacciones' %}" type="button" class="btn btn-secondary">Cancelar</a>
+            <a href="{% url 'cuentas' cuenta.cliente%}" type="button" class="btn btn-secondary">Volver</a>
             <button type="button" class="btn btn-primary" onclick="print()">Imprimir</button>
         </div>
     </div>

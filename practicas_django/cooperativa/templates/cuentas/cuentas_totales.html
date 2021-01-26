@@ -5,6 +5,7 @@
 {% block contenido %}
 <div class="container">
     <div class="row justify-content-center">
+        <h2>Cuentas Totales de la Cooperativa</h2>
         <div class="col-sm-10">
             <div class="card">
                 <div class="card-body text-center">
@@ -13,6 +14,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Numero</th>
+                                    <th scope="col">Cliente</th>
                                     <th scope="col">Saldo</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col">Tipo</th>
@@ -20,9 +22,10 @@
                             </thead>
                             <tbody>
                                 {% for cuenta in listaCuentas %}
-                                <tr>
-                                    <th scope="row"><a
-                                            href="{% url 'cuenta_cliente' cuenta.numero %}">{{cuenta.numero}}</a></th>
+                                <tr>                                    
+                                    <th scope="row">{{cuenta.numero}}</th>
+
+                                    <td><a href="{% url 'cuentas' cuenta.cliente%}">{{cuenta.cliente}}</a></td>                                    
                                     <td>{{cuenta.saldo}} USD</td>
                                     <td>{{cuenta.estado}}</td>
                                     <td>{{cuenta.tipoCuenta}}</td>
@@ -32,9 +35,9 @@
                         </table>
                     </div>
                     <a href="{% url 'clientes' %}" class="btn btn-primary m-2">Lista de Clientes</a>
-                </div>                
-            </div>            
-        </div>        
-    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

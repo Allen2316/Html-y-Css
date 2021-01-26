@@ -54,13 +54,14 @@ def crearCliente(request):
             # ORM
             cuenta.save()
 
-            user = User.objects.create_user(
-                cliente.cedula, cliente.correo, cliente.cedula)
-            user.first_name = cliente.nombres
-            user.last_name = cliente.apellidos
-            grupo = Group.objects.get(name="clientes")  # ORM
-            user.groups.add(grupo)
-            user.save()  # ORM
+            #user = User.objects.create_user(
+            #    cliente.cedula, cliente.correo, cliente.cedula)
+            #user.first_name = cliente.nombres
+            #user.last_name = cliente.apellidos
+            #grupo = Group.objects.get(name="clientes")  
+            # ORM
+            #user.groups.add(grupo)
+            #user.save()  # ORM
 
         return redirect(index)
     return render(request, 'clientes/crearClientes.html', locals())
@@ -135,3 +136,13 @@ def eliminarCuenta(request, numero):
         cuenta.delete()
         return redirect(index)
     return render(request, 'cuentas/eliminar.html', locals())
+
+
+@login_required
+def cuentas_totales(request):
+    usuario = request.user
+    if usuario.groups.filter(name = "gestion_clientes").exists(): 
+        listaCuentas = Cuenta.objects.all()           
+        return render (request, 'cuentas/cuentas_totales.html', locals())
+    else:
+        return render(request, 'login/forbidden.html', locals())

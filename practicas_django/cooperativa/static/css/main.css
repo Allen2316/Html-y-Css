@@ -1,0 +1,9 @@
+@media print {
+    .accion{
+        display: none;
+    }
+}
+
+body{
+    background-color: green;
+}

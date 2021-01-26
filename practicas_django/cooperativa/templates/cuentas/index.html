@@ -20,6 +20,7 @@
                 <th scope="col">Saldo</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Tipo</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +29,8 @@
                 <th scope="row"><a href="{% url 'modificar_cuentas' cuenta.numero%}">{{cuenta.numero}}</a></th>
                 <td>{{cuenta.saldo}} USD</td>
                 <td>{{cuenta.estado}}</td>
-                <td>{{cuenta.tipoCuenta}}</td>
+                <td>{{cuenta.tipoCuenta}}</td>                
+                <th scope="row"><a href="{% url 'cuenta_cliente' cuenta.numero  %}" class="btn btn-info">Transaccion</a></th>
             </tr>
             {% endfor %}
         </tbody>

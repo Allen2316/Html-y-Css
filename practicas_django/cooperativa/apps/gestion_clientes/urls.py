@@ -17,4 +17,6 @@ urlpatterns = [
          views.modificarCuenta, name="modificar_cuentas"),
     path('eliminar_cuentas/<int:numero>/',
          views.eliminarCuenta, name="eliminar_cuentas"),
+    path('cuentasGeneral', views.cuentas_totales, name="cuentasGeneral"),
+
 ]
