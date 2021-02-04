@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Hashing\BcryptHasher;
+use Illuminate\Support\Str;
 use App\Http\Helper\ResponseBuilder;
 use DB;
 
@@ -25,6 +26,8 @@ class UserController extends Controller
         $user = User::where('username', $usuario)->first();
         if (!empty($user)) {
             if ($this->django_password_verify($clave, $user->password)) {
+                $user->api_token = Str::random(150);
+                $user->save();
                 $status = true;
                 $info = "User is OK";
                 return ResponseBuilder::result($status, $info, $user);
@@ -33,8 +36,29 @@ class UserController extends Controller
                 $info = "User is incorrect";
             }
             return ResponseBuilder::result($status, $info);
+        } else {
+            $status = false;
+            $info = "User is incorrect";
         }
+        return ResponseBuilder::result($status, $info);
     }
+
+    public function logout(Request $request)
+    {
+        $usuario = $request->username;
+        $user = User::where('username', $usuario)->first();
+        if (!empty($user)) {
+            $user->api_token = null;
+            $user->save();
+            $status = true;
+            $info = "Logout correct";
+        } else {
+            $status = false;
+            $info = "User is incorrect";
+        }
+        return ResponseBuilder::result($status, $info);
+    }
+
 
     function django_password_verify(string $password, string $djangoHash): bool
     {
