@@ -22,4 +22,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="inicio">Inicio</string>
+    <string name="nombre_autor">Luis Sarmiento</string>
+    <string name="email_inst">luis.a.sarmiento@unl.edu.ec</string>
 </resources>

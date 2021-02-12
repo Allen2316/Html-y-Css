@@ -1,14 +1,19 @@
-package com.example.sarmiento_luis.ui.login;
+package com.example.sarmiento_luis;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 
-import com.example.sarmiento_luis.R;
+import com.example.sarmiento_luis.ui.login.ActivityLogin;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -35,6 +40,17 @@ public class Activity_Principal extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        Button btnIrMain = findViewById(R.id.irA_main);
+        btnIrMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Activity_Principal.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -61,4 +77,6 @@ public class Activity_Principal extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }

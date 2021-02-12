@@ -10,22 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sarmiento_Luis">
         <activity
-            android:name=".ui.login.Activity_Principal"
+            android:name=".Activity_Principal"
             android:label="@string/title_activity__principal"
-            android:theme="@style/Theme.Sarmiento_Luis.NoActionBar"></activity>
+            android:theme="@style/Theme.Sarmiento_Luis.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
         <activity
             android:name=".ui.login.ActivityLogin"
             android:label="@string/title_activity_login"></activity>
         <activity android:name=".ActividadFragmentos" />
         <activity android:name=".ActivityNombres" />
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".MainActivity"></activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
