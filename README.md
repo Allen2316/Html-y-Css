@@ -2,7 +2,7 @@
 #### Autor: Luis Alberto Sarmiento Cuenca
   
 | Practicas                             | Descripcion                                                  |
-| ------------------------------------- |:------------------------------------------------------------:|
+| ------------------------------------- | ------------------------------------------------------------:|
 | [Practicas de Html y Css][1]          | Todo lo relacionado a la primera practica de HTML y CSS      |
 | [Practicas de Hoteles (Bootstrap)][6] | Todo lo relacionado a la practica de Hoteles usando Bootstrap|
 | [Practicas de JQuery y AJAX][2]       | Todas las practicas realizadas de AJAX y JQuery              |
