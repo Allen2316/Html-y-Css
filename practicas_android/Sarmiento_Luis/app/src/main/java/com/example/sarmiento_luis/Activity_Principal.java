@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sarmiento_luis.ui.login.ActivityLogin;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -65,6 +67,32 @@ public class Activity_Principal extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.opcionMI:
+                intent = new Intent(Activity_Principal.this, ActividadMemoriaInterna.class);
+                startActivity(intent);
+                break;
+            case R.id.opcionActividadMI:
+                intent = new Intent(Activity_Principal.this, ActivityMemoriaPrograma.class);
+                startActivity(intent);
+                break;
+            case R.id.opcionMSD:
+                intent = new Intent(Activity_Principal.this, ActividadMemoriaSD.class);
+                startActivity(intent);
+                break;
+            case R.id.opcionDB:
+                intent = new Intent(Activity_Principal.this, ActivityBDDocente.class);
+                startActivity(intent);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity__principal, menu);
@@ -77,6 +105,5 @@ public class Activity_Principal extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 
 }

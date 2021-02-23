@@ -6,4 +6,20 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/opcionMI"
+        android:title="Escritura">
+    </item>
+    <item
+        android:id="@+id/opcionMSD"
+        android:title="Escritura SD">
+    </item>
+    <item
+        android:id="@+id/opcionActividadMI"
+        android:title="Actividad MI">
+    </item>
+    <item
+        android:id="@+id/opcionDB"
+        android:title="SQLite">
+    </item>
 </menu>
