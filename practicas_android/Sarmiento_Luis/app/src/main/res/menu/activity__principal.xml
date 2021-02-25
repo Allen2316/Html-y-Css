@@ -22,4 +22,8 @@
         android:id="@+id/opcionDB"
         android:title="SQLite">
     </item>
+    <item
+        android:id="@+id/opcionAlumnoWS"
+        android:title="Alumno WS">
+    </item>
 </menu>

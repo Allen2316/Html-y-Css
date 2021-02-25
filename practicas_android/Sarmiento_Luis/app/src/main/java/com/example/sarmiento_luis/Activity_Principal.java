@@ -86,6 +86,10 @@ public class Activity_Principal extends AppCompatActivity {
                 intent = new Intent(Activity_Principal.this, ActivityBDDocente.class);
                 startActivity(intent);
                 break;
+            case R.id.opcionAlumnoWS:
+                intent = new Intent(Activity_Principal.this, ActivityVollyAlumno.class);
+                startActivity(intent);
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }

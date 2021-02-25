@@ -3,6 +3,7 @@
     package="com.example.sarmiento_luis">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sarmiento_Luis">
-        <activity android:name=".ActivityBDDocente"></activity>
+        <activity android:name=".ActivityVollyAlumno"></activity>
+        <activity android:name=".ActivityBDDocente" />
         <activity android:name=".ActividadMemoriaSD" />
         <activity android:name=".ActivityMemoriaPrograma" />
         <activity
