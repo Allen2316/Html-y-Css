@@ -1,0 +1,7 @@
+si existe algun error en la libreria de mysql en django, usar los siguientes comandos ubicado en la ruta del proyecto para instalar:
+
+==instalar mysql para django (dentro de proyecto)==
+pip install mysqlclient
+pip install mysql-connector
+easy_install mysql-python
+pip install pymysql 
